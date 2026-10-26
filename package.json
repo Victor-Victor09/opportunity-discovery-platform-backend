@@ -1,0 +1,49 @@
+{
+  "name": "opportunity-discovery-platform-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js | pino-pretty",
+    "migrate": "sequelize-cli db:migrate",
+    "migrate:undo": "sequelize-cli db:migrate:undo",
+    "seed": "sequelize-cli db:seed:all",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Victor-Victor09/opportunity-discovery-platform-backend.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Victor-Victor09/opportunity-discovery-platform-backend/issues"
+  },
+  "homepage": "https://github.com/Victor-Victor09/opportunity-discovery-platform-backend#readme",
+  "dependencies": {
+    "argon2": "^0.45.1",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1",
+    "pino": "^10.4.0",
+    "pino-http": "^11.0.0",
+    "sequelize": "^6.37.8",
+    "zod": "^4.6.7"
+  },
+  "allowScripts": {
+    "argon2@0.45.1": true
+  },
+  "devDependencies": {
+    "eslint": "^10.13.0",
+    "pino-pretty": "^13.2.0",
+    "sequelize-cli": "^6.6.5",
+    "supertest": "^7.3.1",
+    "vitest": "^5.0.5"
+  }
+}

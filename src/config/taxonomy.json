@@ -1,0 +1,30 @@
+{
+  "opportunityTypes": [
+    "workshop",
+    "bootcamp",
+    "seminar",
+    "training",
+    "scholarship",
+    "internship"
+  ],
+  "deliveryFormats": [
+    "remote",
+    "on-site",
+    "hybrid"
+  ],
+  "skillLevels": [
+    "beginner",
+    "intermediate",
+    "advanced"
+  ],
+  "careerAreas": [
+    "software-development",
+    "data-science",
+    "product-design",
+    "marketing",
+    "finance",
+    "health-tech",
+    "agriculture",
+    "education"
+  ]
+}

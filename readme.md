@@ -1,6 +1,6 @@
 # Opportunity Discovery Platform: Backend
 
-> Working title. The product name is not final, so nothing in this repository should hard-code it.
+> Working title. The product name is not final yet, so don't hard-code it through the repository.
 
 This README has two layers. Read the first section if you want to understand what the backend does. Read the second if you need to run it, call it, or change it. Every deeper document in `docs/` is fully technical.
 
@@ -94,23 +94,26 @@ A modular monolith. A request enters through a route, passes middleware (authent
 ### Project structure
 
 ```
-src/
-  config/        environment loading, database connection, taxonomy.json (the agreed vocabulary)
-  constants/     roles and statuses owned by the backend
-  models/        Sequelize models and associations
-  migrations/    one migration per schema change (CommonJS, .cjs)
-  routes/        URL definitions only
-  controllers/   read request, call a service, send response
-  services/      auth, opportunities, for-you scoring, verification
-  middleware/    authenticate, requireRole, validate, rateLimit, errorHandler
-  validators/    Zod schemas, one file per resource
-  utils/         small shared helpers
-  app.js         builds the Express app
-  server.js      starts the server
-seeders/         career area seeder (CommonJS, .cjs)
-scripts/         opportunity CSV import (ES module)
-tests/           unit and integration tests
-docs/            technical documentation
+opportunity-platform-api/
+  data/          taxonomy.json, the agreed vocabulary shared with Data and Product
+  db/
+    migrations/  one migration per schema change (CommonJS, .cjs)
+    seeders/     career area seeder (CommonJS, .cjs)
+  docs/          technical documentation
+  src/
+    config/      environment loading and database connection
+    models/      Sequelize models and associations
+    modules/     one folder per feature (auth, opportunities, users,
+                 preferences, admin, audit, health), each holding its
+                 routes, controller, service, and Zod validation
+    middlewares/ authenticate, authorize, validate, rateLimiter, errorHandler
+    utils/       small shared helpers
+    routes/      mounts every module under /v1
+    app.js       builds the Express app
+    server.js    starts the server
+  tests/
+    unit/
+    integration/
 ```
 
 ### Conventions that prevent cross-team clashes

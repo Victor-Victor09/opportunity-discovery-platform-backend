@@ -1,8 +1,13 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Opportunity Discovery Platform API' });
+const router = Router();
+
+router.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'opportunity-discovery-platform-backend',
+    timestamp: new Date().toISOString(),
+  });
 });
 
-module.exports = router;
+export default router;

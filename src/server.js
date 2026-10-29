@@ -1,19 +1,20 @@
-const app = require('./app');
-const { env } = require('./config/env');
-const { default: logger } = require('./utils/logger');
+import app from './app.js';
+import { connectDatabase } from './config/database.js';
+import { env, logger } from './config/env.js';
 
-const port = env.PORT || 3000;
+const port = env.PORT;
 
-const server = app.listen(port, () => {
-  logger.info(`Server listening on port ${port}`);
-});
+const startServer = async () => {
+  try {
+    await connectDatabase();
 
-const shutdown = (signal) => {
-  logger.info(`Received ${signal}. Shutting down gracefully.`);
-  server.close(() => process.exit(0));
+    app.listen(port, () => {
+      logger.info(`Server is listening on port ${port}`);
+    });
+  } catch (error) {
+    logger.error({ err: error }, 'Server failed to start');
+    process.exit(1);
+  }
 };
 
-process.on('SIGINT', () => shutdown('SIGINT'));
-process.on('SIGTERM', () => shutdown('SIGTERM'));
-
-module.exports = server;
+startServer();

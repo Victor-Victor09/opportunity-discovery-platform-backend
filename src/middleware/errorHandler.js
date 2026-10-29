@@ -1,16 +1,23 @@
-function errorHandler(err, req, res, next) {
-  const statusCode = err.statusCode || 500;
-  const response = {
-    success: false,
-    message: err.message || 'Internal server error',
-    code: err.code || 'INTERNAL_ERROR',
-  };
+import { ka } from "zod/locales";
 
-  if (process.env.NODE_ENV !== 'production') {
-    response.stack = err.stack;
-  }
-
-  return res.status(statusCode).json(response);
+export function notFoundHandler(req, res) {
+  res.status(404).json({
+    status: 'error',
+    message: `Route not found: ${req.originalUrl}`,
+  });
 }
 
-module.exports = { errorHandler };
+export function errorHandler(error, req, res, _next) {
+  req.log?.error({ err: error }, 'Unhandled application error');
+
+  const statusCode = error.statusCode || 500;
+  const message = 
+    statusCode >= 500
+      ? 'Internal server error'
+      : error.message || 'An error occurred';
+
+  res.status(statusCode).json({
+    status: 'error',
+    message,
+  });
+}

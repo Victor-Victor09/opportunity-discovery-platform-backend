@@ -1,16 +1,32 @@
-const { Sequelize } = require('sequelize');
-const { env } = require('./env');
+import { Sequelize } from 'sequelize';
+import { env, logger } from './env.js';
 
-const sequelize = new Sequelize(env.DATABASE_URL, {
-  dialect: 'postgres',
-  logging: false,
-  dialectOptions: {
-    ssl: env.DB_SSL ? { require: true, rejectUnauthorized: false } : false,
-  },
-  define: {
-    underscored: true,
-    timestamps: true,
-  },
-});
+const sequelize = env.DATABASE_URL
+  ? new Sequelize(env.DATABASE_URL, {
+      dialect: 'postgres',
+      logging: false,
+      dialectOptions: env.DB_SSL
+        ? {
+            ssl: {
+              require: true,
+              rejectUnauthorized: false,
+            },
+          }
+        : {},
+      define: {
+        underscored: true,
+        timestamps: true,
+      },
+    })
+  : null;
 
-module.exports = sequelize;
+export async function connectDatabase() {
+  if (!sequelize) {
+    throw new Error('DATABASE_URL is not set.');
+  }
+
+    await sequelize.authenticate();
+    logger.info('Database connection established.');
+}
+
+export { sequelize };
